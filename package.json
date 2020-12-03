@@ -6,9 +6,11 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "test": "live-server --open=./SpecRunner.html --port=8081",
+    "test": "live-server --browser='Google Chrome' --open=./SpecRunner.html --port=8081",
+    "index": "live-server --browser='Google Chrome' --open=./index.html --port=8082",
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
-    "transpile": "babel . --watch --out-dir compiled --presets=react --ignore=node_modules,compiled --source-maps inline"
+    "transpile": "babel . --watch --out-dir compiled --presets=react --ignore=node_modules,compiled --source-maps inline",
+    "start": "npm run test & npm run transpile & npm run index"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.2",
