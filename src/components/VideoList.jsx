@@ -4,11 +4,8 @@ var VideoList = (props) => (
   <div className="video-list">
 
     {props.videos.map((current, index) =>
-      <VideoListEntry video={current} key={index}/>
+      <VideoListEntry video={current} onVideoTitleClick={props.onVideoTitleClick} key={index}/>
     )}
-
-    {/* <VideoListEntry video={props.videos[0]}/> */}
-    {/* Look at the documentation on how to render (possibly using a function) multiple objects {video} without hardcoding. */}
 
   </div>
 );
