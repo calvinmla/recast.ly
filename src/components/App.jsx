@@ -1,5 +1,6 @@
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
+import searchYouTube from '../lib/searchYouTube.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,8 +11,14 @@ class App extends React.Component {
       currentVideoIndex: 0
     };
 
-    this.clickedTitle = '';
+    console.log('this.props = ', this.props);
+    console.log('this.props.data = ', this.props.data);
+    console.log('this.props.data[1] = ', this.props.data[1]);
+    console.log('this.state.currentVideoIndex = ', this.state.currentVideoIndex);
+
   }
+
+
 
   getClickedTitleIndex(clickedTitle) {
     for (let i = 0; i < this.props.data.length; i++) {
@@ -22,14 +29,22 @@ class App extends React.Component {
 
   // Event handler
   onVideoListEntryClick(clickedTitle) {
-    this.clickedTitle = clickedTitle;
 
-    // call a func to return the videoId
-    let clickedIndex = this.getClickedTitleIndex(this.clickedTitle);
+    let clickedIndex = this.getClickedTitleIndex(clickedTitle);
 
     this.setState({
       currentVideoIndex: clickedIndex
     });
+  }
+
+  componentWillMount() {
+    console.log('before');
+  }
+
+
+  componentDidMount() {
+    console.log(ReactDOM.findDOMNode(this));
+    console.log('this.props.data[1] = ', this.props.data[1]);
   }
 
   render() {

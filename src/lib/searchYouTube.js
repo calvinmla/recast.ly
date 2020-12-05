@@ -1,4 +1,4 @@
-import YOUTUBE_API_KEY from '/compiled/src/config/youtube.js';
+import YOUTUBE_API_KEY from '/src/config/youtube.js';
 
 var searchYouTube = (options, callback) => {
 // TODO

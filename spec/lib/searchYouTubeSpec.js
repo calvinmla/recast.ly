@@ -92,5 +92,6 @@ describe('searchYouTube', function() {
       expect(hasSameShape(data.items, exampleVideoData)).to.be.true;
       done();
     });
+
   });
 });
