@@ -1,50 +1,40 @@
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
-import searchYouTube from '../lib/searchYouTube.js';
+import exampleVideoData from '../data/exampleVideoData.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    // initial default video
     this.state = {
-      currentVideoIndex: 0
+      videos: exampleVideoData,
+      currentVideo: exampleVideoData[0],
+    };
+  }
+
+  componentDidMount() {
+    this.retrieveSearchedVideos('dogs');
+  }
+
+  retrieveSearchedVideos(searchedString) {
+    var options = {
+      key: this.props.API_KEY,
+      query: searchedString,
     };
 
-    console.log('this.props = ', this.props);
-    console.log('this.props.data = ', this.props.data);
-    console.log('this.props.data[1] = ', this.props.data[1]);
-    console.log('this.state.currentVideoIndex = ', this.state.currentVideoIndex);
-
-  }
-
-
-
-  getClickedTitleIndex(clickedTitle) {
-    for (let i = 0; i < this.props.data.length; i++) {
-      let currentVidObj = this.props.data[i];
-      if (currentVidObj.snippet.title === clickedTitle) { return i; }
-    }
-  }
-
-  // Event handler
-  onVideoListEntryClick(clickedTitle) {
-
-    let clickedIndex = this.getClickedTitleIndex(clickedTitle);
-
-    this.setState({
-      currentVideoIndex: clickedIndex
+    this.props.searchYouTube(options, (items) => {
+      this.setState({
+        videos: items,
+        currentVideoIndex: 0,
+        currentVideo: this.state.videos[0],
+      });
     });
   }
 
-  componentWillMount() {
-    console.log('before');
-  }
-
-
-  componentDidMount() {
-    console.log(ReactDOM.findDOMNode(this));
-    console.log('this.props.data[1] = ', this.props.data[1]);
+  onVideoClick(video) {
+    this.setState({
+      currentVideo: video
+    });
   }
 
   render() {
@@ -57,10 +47,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={this.props.data[this.state.currentVideoIndex]}/>
+            <VideoPlayer video={this.state.currentVideo}/>
           </div>
           <div id="videoList" className="col-md-5">
-            <VideoList videos={this.props.data} onVideoTitleClick={this.onVideoListEntryClick.bind(this)}/>
+            <VideoList videos={this.state.videos} onVideoClick={this.onVideoClick.bind(this)} />
           </div>
         </div>
       </div>

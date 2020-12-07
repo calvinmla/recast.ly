@@ -15,20 +15,15 @@ var getURLSearchParams = function(url) {
 
 var hasSameShape = function(objectOne, objectTwo) {
   if (Object.keys(objectOne).length !== Object.keys(objectTwo).length) {
-    console.log('not same length');
-    console.log('objectOne.length = ', objectOne.length);
-    console.log('objectTwo.length = ', objectTwo.length);
     return false;
   }
 
   for (var key in objectOne) {
     if (!key in objectTwo) {
-      console.log('different keys');
       return false;
     }
 
     if (typeof objectOne[key] !== typeof objectTwo[key]) {
-      console.log('different types');
       return false;
     }
 
@@ -60,19 +55,17 @@ describe('searchYouTube', function() {
 
   it('should send a GET request', function() {
     searchYouTube({}, () => {});
+
     expect(requests[0].method).to.equal('GET');
   });
 
   it('should accept `key`, `query`, and `max` options and send them in GET request', function() {
-    searchYouTube({ key: 'API_KEY', query: 'cats', max: 5 }, () => {});
+    searchYouTube({ key: 'API_KEY', query: 'cats', max: 10 }, () => {});
 
     var params = getURLSearchParams(requests[0].url);
-
-    // .q changed to .query
-    // .maxResults changed to max.
     expect(params.key).to.equal('API_KEY');
-    expect(params.query).to.equal('cats');
-    expect(params.max).to.equal('5');
+    expect(params.q).to.equal('cats');
+    expect(params.maxResults).to.equal('10');
   });
 
   // Same shape means that the data should have the same keys, nested the same way as `exampleVideoData`,
@@ -81,17 +74,15 @@ describe('searchYouTube', function() {
     var options = {
       key: YOUTUBE_API_KEY,
       query: 'react',
-      max: 5,
-      part: 'snippet'
+      max: 5
     };
 
     // We want this test to make a real AJAX request
     xhr.restore();
 
     searchYouTube(options, (data) => {
-      expect(hasSameShape(data.items, exampleVideoData)).to.be.true;
+      expect(hasSameShape(data, exampleVideoData)).to.be.true;
       done();
     });
-
   });
 });
