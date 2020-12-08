@@ -1,4 +1,4 @@
-var Search = () => (
+var Search = (props) => (
   <div className="search-bar form-inline">
     <input className="form-control" type="text" onChange={(e) => props.retrieveSearchedVideos(e.target.value)}/>
     <button className="btn hidden-sm-down">

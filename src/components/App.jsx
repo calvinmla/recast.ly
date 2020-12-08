@@ -43,7 +43,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search retrieveSearchedVideos={this.retrieveSearchedVideos.bind(this)} />
+            <Search retrieveSearchedVideos={_.debounce(this.retrieveSearchedVideos.bind(this), 500)} />
           </div>
         </nav>
         <div className="row">
